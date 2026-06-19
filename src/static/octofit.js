@@ -2,11 +2,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const statusContainer = document.getElementById("octofit-status");
   const workoutsContainer = document.getElementById("octofit-workouts");
   const usersContainer = document.getElementById("octofit-users");
+  const workoutForm = document.getElementById("workout-form");
+  const userForm = document.getElementById("user-form");
+  const workoutMessage = document.getElementById("workout-message");
+  const userMessage = document.getElementById("user-message");
 
-  async function fetchJson(path) {
-    const response = await fetch(path);
+  async function fetchJson(path, options) {
+    const response = await fetch(path, options);
     if (!response.ok) {
-      throw new Error(`Request failed: ${response.status}`);
+      const errorBody = await response.json().catch(() => null);
+      throw new Error(errorBody?.detail || `Request failed: ${response.status}`);
     }
     return await response.json();
   }
@@ -43,6 +48,13 @@ document.addEventListener("DOMContentLoaded", () => {
     usersContainer.appendChild(list);
   }
 
+  function showMessage(element, text, isError = false) {
+    element.textContent = text;
+    element.className = isError ? "error" : "success";
+    element.classList.remove("hidden");
+    setTimeout(() => element.classList.add("hidden"), 4000);
+  }
+
   async function loadData() {
     try {
       const status = await fetchJson("/octofit/status");
@@ -65,6 +77,46 @@ document.addEventListener("DOMContentLoaded", () => {
       usersContainer.textContent = "Unable to load users.";
     }
   }
+
+  workoutForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const name = document.getElementById("workout-name").value.trim();
+    const duration = parseInt(document.getElementById("workout-duration").value, 10);
+
+    try {
+      await fetchJson("/octofit/workouts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, duration_minutes: duration }),
+      });
+      showMessage(workoutMessage, "Workout created successfully.");
+      workoutForm.reset();
+      const workouts = await fetchJson("/octofit/workouts");
+      renderWorkouts(workouts);
+    } catch (error) {
+      showMessage(workoutMessage, error.message || "Unable to create workout.", true);
+    }
+  });
+
+  userForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const name = document.getElementById("user-name").value.trim();
+    const email = document.getElementById("user-email").value.trim();
+
+    try {
+      await fetchJson("/octofit/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email }),
+      });
+      showMessage(userMessage, "User created successfully.");
+      userForm.reset();
+      const users = await fetchJson("/octofit/users");
+      renderUsers(users);
+    } catch (error) {
+      showMessage(userMessage, error.message || "Unable to create user.", true);
+    }
+  });
 
   loadData();
 });
