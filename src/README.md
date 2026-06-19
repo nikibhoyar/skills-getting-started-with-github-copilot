@@ -31,6 +31,14 @@ A super simple FastAPI application that allows students to view and sign up for 
 | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | GET    | `/activities`                                                     | Get all activities with their details and current participant count |
 | POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity                                             |
+| GET    | `/octofit/status`                                                 | Check Octofit service availability                                  |
+| GET    | `/octofit/workouts`                                               | List example Octofit workouts                                       |
+| GET    | `/octofit/users`                                                  | List example Octofit users                                          |
+
+## Octofit Scaffold
+
+The repository also includes an Octofit scaffold under `src/octofit`.
+It provides a small fitness API with sample workouts and users.
 
 ## Data Model
 
