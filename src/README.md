@@ -25,12 +25,31 @@ A super simple FastAPI application that allows students to view and sign up for 
    - API documentation: http://localhost:8000/docs
    - Alternative documentation: http://localhost:8000/redoc
 
+## Testing
+
+Install test dependencies and run the suite:
+
+```bash
+pip install -r ../requirements.txt
+pytest -q
+```
+
 ## API Endpoints
 
 | Method | Endpoint                                                          | Description                                                         |
 | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | GET    | `/activities`                                                     | Get all activities with their details and current participant count |
 | POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity                                             |
+| GET    | `/octofit/status`                                                 | Check Octofit service availability                                  |
+| GET    | `/octofit/workouts`                                               | List example Octofit workouts                                       |
+| POST   | `/octofit/workouts`                                               | Create a new Octofit workout                                        |
+| GET    | `/octofit/users`                                                  | List example Octofit users                                          |
+| POST   | `/octofit/users`                                                  | Create a new Octofit user                                            |
+
+## Octofit Scaffold
+
+The repository also includes an Octofit scaffold under `src/octofit`.
+It provides a small fitness API with sample workouts, users, and creation routes.
 
 ## Data Model
 

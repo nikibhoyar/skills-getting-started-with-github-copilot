@@ -11,8 +11,13 @@ from fastapi.responses import RedirectResponse
 import os
 from pathlib import Path
 
-app = FastAPI(title="Mergington High School API",
-              description="API for viewing and signing up for extracurricular activities")
+from .octofit.api import router as octofit_router
+
+app = FastAPI(
+    title="Mergington High School API",
+    description="API for viewing and signing up for extracurricular activities",
+)
+app.include_router(octofit_router, prefix="/octofit")
 
 # Mount the static files directory
 current_dir = Path(__file__).parent
