@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const userForm = document.getElementById("user-form");
   const workoutMessage = document.getElementById("workout-message");
   const userMessage = document.getElementById("user-message");
+  const workoutSubmitButton = workoutForm.querySelector("button");
+  const userSubmitButton = userForm.querySelector("button");
 
   async function fetchJson(path, options) {
     const response = await fetch(path, options);
@@ -83,6 +85,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const name = document.getElementById("workout-name").value.trim();
     const duration = parseInt(document.getElementById("workout-duration").value, 10);
 
+    if (!name || !duration || duration <= 0) {
+      showMessage(workoutMessage, "Enter a valid workout name and duration.", true);
+      return;
+    }
+
+    workoutSubmitButton.disabled = true;
+    workoutSubmitButton.textContent = "Creating...";
+
     try {
       await fetchJson("/octofit/workouts", {
         method: "POST",
@@ -95,6 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
       renderWorkouts(workouts);
     } catch (error) {
       showMessage(workoutMessage, error.message || "Unable to create workout.", true);
+    } finally {
+      workoutSubmitButton.disabled = false;
+      workoutSubmitButton.textContent = "Create workout";
     }
   });
 
@@ -102,6 +115,14 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
     const name = document.getElementById("user-name").value.trim();
     const email = document.getElementById("user-email").value.trim();
+
+    if (!name || !email) {
+      showMessage(userMessage, "Enter a valid name and email.", true);
+      return;
+    }
+
+    userSubmitButton.disabled = true;
+    userSubmitButton.textContent = "Creating...";
 
     try {
       await fetchJson("/octofit/users", {
@@ -115,6 +136,9 @@ document.addEventListener("DOMContentLoaded", () => {
       renderUsers(users);
     } catch (error) {
       showMessage(userMessage, error.message || "Unable to create user.", true);
+    } finally {
+      userSubmitButton.disabled = false;
+      userSubmitButton.textContent = "Create user";
     }
   });
 

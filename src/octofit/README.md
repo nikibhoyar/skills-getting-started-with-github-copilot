@@ -22,3 +22,26 @@ Then view the API:
 - `http://127.0.0.1:8000/octofit/status`
 - `http://127.0.0.1:8000/octofit/workouts`
 - `http://127.0.0.1:8000/octofit/users`
+
+Create resources:
+
+- `POST http://127.0.0.1:8000/octofit/workouts`
+- `POST http://127.0.0.1:8000/octofit/users`
+
+Example JSON for workout creation:
+
+```json
+{
+  "name": "Strength Training",
+  "duration_minutes": 40
+}
+```
+
+Example JSON for user creation:
+
+```json
+{
+  "name": "Taylor",
+  "email": "taylor@octofit.app"
+}
+```

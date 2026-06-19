@@ -29,15 +29,15 @@ header h1 {
 }
 
 main {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 30px;
   justify-content: center;
 }
 
 @media (min-width: 768px) {
   main {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(2, minmax(320px, 1fr));
   }
 }
 
