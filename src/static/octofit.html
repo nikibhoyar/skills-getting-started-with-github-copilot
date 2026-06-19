@@ -14,20 +14,22 @@
 
     <main>
       <section>
-        <h3>Welcome to Octofit</h3>
-        <p>
-          This sample page shows the Octofit feature scaffold. It connects to the
-          Octofit API routes exposed at <code>/octofit</code>.
-        </p>
-        <ul>
-          <li><a href="/octofit/status">Service status</a></li>
-          <li><a href="/octofit/workouts">Workouts</a></li>
-          <li><a href="/octofit/users">Users</a></li>
-        </ul>
+        <h3>Octofit Status</h3>
+        <p id="octofit-status">Loading status...</p>
       </section>
 
       <section>
-        <h3>How to use</h3>
+        <h3>Workouts</h3>
+        <div id="octofit-workouts">Loading workouts...</div>
+      </section>
+
+      <section>
+        <h3>Users</h3>
+        <div id="octofit-users">Loading users...</div>
+      </section>
+
+      <section>
+        <h3>API Docs</h3>
         <p>
           Open the API documentation at <a href="/docs">/docs</a> to explore the
           Octofit endpoints along with the existing activities API.
@@ -38,5 +40,6 @@
     <footer>
       <p>&copy; 2026 Octofit Sample App</p>
     </footer>
+    <script src="octofit.js"></script>
   </body>
 </html>
